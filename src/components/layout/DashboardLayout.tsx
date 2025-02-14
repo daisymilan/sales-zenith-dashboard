@@ -71,18 +71,16 @@ export function DashboardLayout({ children, role }: DashboardLayoutProps) {
           <div className="flex-1 py-4">
             <ScrollArea>
               <div className="px-2">
-                <nav className="space-y-1">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.href}
-                      to={item.href}
-                      className="flex items-center px-3 py-2 text-sm rounded-md text-dashboard-text-secondary hover:bg-gray-100 hover:text-dashboard-text-primary transition-colors"
-                    >
-                      <item.icon className="h-5 w-5 mr-3" />
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    className="flex items-center px-3 py-2 mb-1 text-sm rounded-md text-dashboard-text-secondary hover:bg-gray-100 hover:text-dashboard-text-primary transition-colors"
+                  >
+                    <item.icon className="h-5 w-5 mr-3" />
+                    {item.label}
+                  </Link>
+                ))}
               </div>
             </ScrollArea>
           </div>
