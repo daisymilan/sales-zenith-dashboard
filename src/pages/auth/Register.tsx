@@ -5,32 +5,31 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { toast } from "sonner";
-import { Eye, EyeOff, LogIn } from "lucide-react";
+import { Eye, EyeOff, UserPlus } from "lucide-react";
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      // TODO: Implement actual authentication
-      if (email === "admin@example.com" && password === "admin") {
-        toast.success("Welcome back, Admin!");
-        navigate("/admin/dashboard");
-      } else if (email === "agent@example.com" && password === "agent") {
-        toast.success("Welcome back, Agent!");
-        navigate("/agent/dashboard");
-      } else {
-        toast.error("Invalid credentials");
+      if (password !== confirmPassword) {
+        toast.error("Passwords do not match");
+        return;
       }
+
+      // TODO: Implement actual registration
+      toast.success("Registration successful! Please log in.");
+      navigate("/login");
     } catch (error) {
-      toast.error("An error occurred during login");
+      toast.error("An error occurred during registration");
     } finally {
       setIsLoading(false);
     }
@@ -41,14 +40,14 @@ export default function Login() {
       <Card className="w-full max-w-md animate-fade-in">
         <CardHeader className="space-y-1 text-center">
           <CardTitle className="text-2xl font-bold tracking-tight">
-            Welcome back
+            Create an account
           </CardTitle>
           <p className="text-sm text-muted-foreground">
-            Enter your credentials to continue
+            Enter your details to get started
           </p>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin} className="space-y-4">
+          <form onSubmit={handleRegister} className="space-y-4">
             <div className="space-y-2">
               <Input
                 type="email"
@@ -82,17 +81,27 @@ export default function Login() {
                 )}
               </Button>
             </div>
+            <div className="space-y-2">
+              <Input
+                type={showPassword ? "text" : "password"}
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                className="w-full"
+              />
+            </div>
             <Button
               type="submit"
               className="w-full bg-dashboard-accent hover:bg-dashboard-accent/90"
               disabled={isLoading}
             >
               {isLoading ? (
-                "Signing in..."
+                "Creating account..."
               ) : (
                 <>
-                  <LogIn className="mr-2 h-4 w-4" />
-                  Sign in
+                  <UserPlus className="mr-2 h-4 w-4" />
+                  Create account
                 </>
               )}
             </Button>
@@ -100,12 +109,12 @@ export default function Login() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
-            Don't have an account?{" "}
+            Already have an account?{" "}
             <Link
-              to="/register"
+              to="/login"
               className="text-dashboard-accent hover:text-dashboard-accent/90 font-medium"
             >
-              Sign up
+              Sign in
             </Link>
           </p>
         </CardFooter>
